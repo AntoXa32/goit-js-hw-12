@@ -131,6 +131,7 @@ button {
 }
 
 .load-more-btn {
+  display: none;
   position: relative;
   top: 5%;
   left: 50%;

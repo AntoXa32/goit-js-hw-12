@@ -27,15 +27,19 @@ document.addEventListener('DOMContentLoaded', () => {
     clearGallery();
     currentPage = 1;
     await fetchAndRenderImages();
+
+    const data = await fetchImages(searchQuery, currentPage);
+    if (data.totalHits > 15) {
+      loadMoreBtn.style.display = 'block';
+    } else {
+      loadMoreBtn.style.display = 'none';
+    }
   });
 
   loadMoreBtn.addEventListener('click', async () => {
     currentPage++;
     await fetchAndRenderImages();
-    loadMoreBtn.style.display = 'none';
-    setTimeout(() => {
-      loadMoreBtn.style.display = 'block';
-    }, 500);
+    smoothScroll();
   });
 });
 
@@ -65,7 +69,6 @@ async function fetchAndRenderImages() {
     }
 
     initLightbox();
-    smoothScroll();
   } catch (error) {
     showErrorToast('Failed to fetch images. Please try again later.');
   }
